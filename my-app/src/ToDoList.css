@@ -1,0 +1,55 @@
+.toDoList {
+    min-height: 400px;
+    height: fit-content;
+    width: 300px;
+    background-color: blanchedalmond;
+    padding: 1.5em;
+    border: 2px solid #e41818;
+    border-radius: 5px;
+    margin: 30px auto;
+}
+.header {
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+    background-color:brown;
+    color: white;
+    padding: 10px 0;
+    border-radius: 5px;
+}
+#nhapTask {
+    width: 90%;
+    padding: 5%;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.addButton {
+    padding: 5px 10px;
+    margin: 10px 10px;
+    border-radius: 3px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.clearButton {
+    padding: 5px 10px;
+    margin: 10px 10px;
+    border-radius: 3px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.task {
+    text-align: left;
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 3px;
+    border: 1px solid #e41818;
+}
+.taskLabel {
+    margin-left: 10px;
+    font-size: 16px;
+}
