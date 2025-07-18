@@ -65,13 +65,13 @@ function ToDoList() {
         return (
             <div>
                 <h1>Nội dung phần tiếp theo</h1>
-                <h2>Viết bằng child Props</h2>
                 {content}
             </div>
         )
     }
     return (
         <div>
+            
             <TitleBox content={<h2>To-do List đơn giản</h2>} />
 
             <div className="toDoList">
