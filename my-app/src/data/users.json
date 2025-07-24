@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Hoàng",
+    "avatar": "https://i.pravatar.cc/100?img=1",
+    "status": "online"
+  },
+  {
+    "id": 2,
+    "name": "Mai",
+    "avatar": "https://i.pravatar.cc/100?img=2",
+    "status": "offline"
+  }
+]

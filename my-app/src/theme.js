@@ -58,11 +58,31 @@ const theme = createTheme({
         },
       },
     },
+    MuiIconButton: {
+      styleOverrides:{
+        root: {
+          height:'50px',
+          width:'50px',
+          fontSize:'large',
+          backgroundColor: "#EFE6DD", 
+          border: '2px solid',
+          borderColor:"#000000",
+          "&:hover":{
+          backgroundColor:"rgba(239, 230, 221, 0.5)",
+          },
+        },
+      },
+    },
     MuiTextField: {
       styleOverrides: {
         root: {
           backgroundColor: "#FFFFFF",
-          
+          "& .MuiOutlinedInput-root": {
+              borderRadius: 6,
+              fontSize: 20,
+              padding:1,
+            },
+          borderRadius: 6
         },
        
       },

@@ -1,50 +1,50 @@
 import { Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
 import theme from "../theme";
 
+import UserList from "./UserList";
 export default function ChatWindow() {
     return (
-        <Container
-            maxWidth={"false"}
-            disableGutters
-            sx={{
-                width: '20vw', // hoặc '20%'
-                ml: 0,         // dính vào mép trái
-                pl: 0,
-             }}
-        >
+
             <Box
                 display={'flex'}
                 flexDirection={"column"}
-                alignItems={'center'}
                 bgcolor={theme.palette.secondary.main}
-                minHeight={'100vh'}
-
+                height={'100vh'}
+                border={'1px solid'}
             >
-                <Typography
-                    variant="h3"
-                    fontWeight={"bold"}
-                    bgcolor={"#A1887F"}
-                    MaxHeight={'10vh'}
-                    width={'100%'}
-                    fontSize={'4vw'}
-                    py={2}
-                    pl={2}
-                >Chatbox
-                </Typography>
                 <Box
+                    display={'flex'}
+                    alignItems={'center'}
+                    width={'100%'}
+                    height={'10%'}
+                    bgcolor={"#A1887F"}
+                    py={3}
+                    px={2}
+                >
+                    <Typography
+                        variant="h3"
+                        fontWeight={"bold"}
+                        fontSize={'3vw'}
+                    >Chatbox
+                    </Typography>
+                </Box>
+                <Box
+                    display={'flex'}
+                    alignItems={'center'}
                     bgcolor={"#C6B4A3"}
                     width={'100%'}
-                    py={2}
-                    px={1}
+                    p={2}
+                    border={'1px solid #000000'}
                 >
                     <TextField
                         placeholder="Tìm kiếm người dùng"
+                        height={'10%'}
                         sx={{
                             '& .MuiOutlinedInput-root': {
                                 width:'100%',
                                 borderRadius: 4,
-                                fontSize: '1em',
-                                padding:1,
+                                fontSize: '1.2em',
+                                padding:0,
                             },
                         borderRadius: 4,
                         width:'100%'
@@ -53,13 +53,14 @@ export default function ChatWindow() {
                 </Box>    
                 <Box
                     sx={{
-                        height: '78vh', // Chưa tốt
+                        height: '80vh', // Chưa tốt
                         width: '100%',
                         overflowY: 'scroll',
-                 
+                        p: '3px',
         
                         // 👇 Custom Scrollbar
                         '&::-webkit-scrollbar': {
+                     
                         width: '8px',
                         },
                         '&::-webkit-scrollbar-track': {
@@ -76,11 +77,12 @@ export default function ChatWindow() {
                         },
                     }}
                     >
-                    {[...Array(50)].map((_, i) => (
-                        <Typography key={i}>Dòng {i + 1}</Typography>
-                    ))}
+                    <Box>
+                        <UserList />
+                    </Box>
+                    
                 </Box>
             </Box>
-        </Container>
+        
     );
 }
