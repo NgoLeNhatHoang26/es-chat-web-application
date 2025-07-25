@@ -2,26 +2,31 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Box } from "@mui/material";
 import User from "./User";
-
+import mockUsers from "../data/MOCK_DATA.json";
 export default function UserList (){
   const [users, setUsers] = useState([]);
-
-    useEffect(() => {
-    const mockUsers = [
-        { id: 1, name: "Hoang", avatar: "", status: "Online" },
-        { id: 2, name: "Mai", avatar: "", status: "Offline" }
-    ];
+  useEffect(() => {
     setUsers(mockUsers);
-    }, []);
+  }, []);
+
     return (
-        <Box>
+
+        <Box
+            width="100%" 
+            maxWidth="400px" 
+            mx='0'
+        >
             {users.map((users) => (
-                <User
-                    key={users.id}
-                    name={users.name}
-                    avatar={users.avatar}
-                    status={users.status}
-                />
+                <Box 
+                    mb={2}
+                >
+                    <User 
+                        key={users.id}
+                            name={users.name}
+                            avatar={users.avatar}
+                            status={"online"}
+                    />
+                </Box>
             ))}
         </Box>
 

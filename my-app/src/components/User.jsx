@@ -7,9 +7,9 @@ export default function User({ name, avatar, status }) {
             display={'flex'}
             alignItems="center"
             py={0.5}
-            px={3}
+            px={2}
             gap={2}
-            width={'fit-content'}
+            width="100%"
         >
             <Avatar
                 src={avatar}

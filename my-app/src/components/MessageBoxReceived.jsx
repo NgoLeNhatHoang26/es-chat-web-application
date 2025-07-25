@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Container, IconButton, Paper, TextField, Typography } from "@mui/material";
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-export default function MessageBoxReceived () {
+export default function MessageBoxReceived ({content}) {
     return (
             <Box
                 display={"flex"}
@@ -21,7 +21,7 @@ export default function MessageBoxReceived () {
                 <Box
                     display={"flex"}
                     flexDirection={"column"}
-                    maxWidth={'30vh'}
+                    maxWidth={'40vw'}
                     width={'fit-content'}
                     height={'fit-content'}
                     bgcolor={"#F7F1ED"}
@@ -30,7 +30,7 @@ export default function MessageBoxReceived () {
                     border={"1px solid #000000"}
                     borderRadius={6}
                 >
-                    <Typography variant="body1" fontSize={'1.2rem'}>Nội dung tin nhắn:</Typography>
+                    <Typography variant="body1" fontSize={'1.2rem'}>{content}</Typography>
 
                     <Typography variant="caption text" alignSelf={"end"} fontSize={'0.8rem'} p={'5px'}>thời gian gửi</Typography>
                     

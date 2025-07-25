@@ -1,47 +1,77 @@
 import { Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
+import { useNavigate } from "react-router-dom";
+import bg from './asset/Rectangle62.png';
 
 export default function Login() {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const handleLogin = () => {
+    navigate("/home");
+  };
+  const handleSignin = () => {
+    navigate("/signin");
+  }
   return (
-  <Container
-        maxWidth='sx'>
+    <Box
+      height={'100vh'}
+      width={'100vw'}
+      position="relative"
+      overflow= 'hidden'
+      bgcolor={'#EFE6DD'}
+    >
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '80%',
+          height: '60%', 
+          backgroundImage: `url(${bg})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          zIndex: 0,
+          }}
+      />
+
       <Box 
-        minHeight = "100vh"
         display= "flex"
+        height="100vh"
+        width="100vw"
         flexDirection= "column"
-        alignItems= "center"
+        justifyContent="center"
+        alignItems="center"
+        position={"relative"}
+        zIndex={1}
       >
-          <Typography mt={'8vh'} variant="h1"fontWeight={"bold"} fontSize={150}   >
+          <Typography  variant="h1" fontWeight={"bold"} fontSize={'8vw'} mr={'20vw'} mb={4}>
             WitChat
           </Typography>
         <Paper
           elevation={10}
           sx={{
-            
             display: "flex",          
             flexDirection: "column",  
             alignItems: "center",
-            width: '45vw',
+            justifyContent: "space-evenly",
+            width: '50vw',
             height: 'auto',
-            marginTop: 5,
-            textAlign: "center",
-            position: 'relative',
-            py: 4,
+            pb:4,
+            border: '2px solid',
             borderRadius: 8,
           }}
         >
-          <Typography variant="h2" mt={4} px={'5%'} fontWeight={"bold"}   >
+          <Typography variant="h2" mt={3} p={3} fontWeight={"bold"} fontSize={'4vw'}  >
             Đăng nhập
           </Typography>
           
-          <Box display={"flex"}
-              flexDirection={"column"}
-              width={'40%'}
-              sx={{mt: '5%'}}
-              gap={4}  
-              
-            >  
+          <Box 
+            display={"flex"}
+            flexDirection={"column"}
+            width={'50%'}
+            sx={{mt: '5%'}}
+            gap={4}  
+          >  
             <TextField 
               label="Tên đăng nhập"
                 InputLabelProps={{
@@ -52,8 +82,8 @@ export default function Login() {
                 }}
               sx={{ 
                 '& .MuiOutlinedInput-root': {
+                  border: '1px solid',
                   borderRadius: 6,
-                  fontSize: 20,
                   padding:1,
                 },
                 borderRadius: 6
@@ -68,44 +98,41 @@ export default function Login() {
                   }}
                 sx={{ 
                   '& .MuiOutlinedInput-root': {
+                    border: '1px solid',
                     borderRadius: 6,
-                    fontSize: 20,
                     padding:1,
                   },
-
                   borderRadius: 6
                 }}
             />
           </Box>
           <Button
-          
             sx={{
               color:"#000000",
-              mt: 2,
               ml:'50%',
               fontSize: '1.1rem',
               "&:hover": {
                 color: "rgba(0, 0, 0, 0.6)",
           },
-          borderColor: "#000000"
             }}
           >
             Quên mật khẩu
           </Button>
           <Button
             variant="outlined"
+            onClick={handleLogin}
             color="secondary"
             sx={{
-              mt: 3,
-              width: '25%',
+              width: '30%',
               padding: '12px 0px',
-              borderRadius: 7,
-              fontSize: '1.2rem'
+              borderRadius: 8,
+              fontSize: '1.5rem'
             }}
           >
             Đăng nhập</Button> 
           <Button
             variant="outlined"
+            onClick={handleSignin}
             sx={{
               backgroundColor:'#CBB9A8',
               mt: 3,
@@ -119,6 +146,6 @@ export default function Login() {
         </Paper>
 
       </Box>
-  </Container>
+    </Box>
   );
 }

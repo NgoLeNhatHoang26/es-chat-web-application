@@ -2,6 +2,7 @@ import { Box, Button, Container, IconButton, Paper, TextField, Typography } from
 import User from './User';
 import CallIcon from '@mui/icons-material/Call';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ButtonMore from "./Buttons/HeaderOptionButton";
 export default function ChatHeader() {
     return (
             <Box
@@ -29,10 +30,9 @@ export default function ChatHeader() {
                     <IconButton>
                         <CallIcon />
                     </IconButton>
-                    <IconButton>
-                        <MoreVertIcon />
-                    </IconButton>
+                    <ButtonMore />
                 </Box>
+                
             </Box>
     );
 }

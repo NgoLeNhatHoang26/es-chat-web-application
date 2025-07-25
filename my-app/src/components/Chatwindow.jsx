@@ -11,6 +11,7 @@ export default function ChatWindow() {
                 bgcolor={theme.palette.secondary.main}
                 height={'100vh'}
                 border={'1px solid'}
+
             >
                 <Box
                     display={'flex'}
@@ -34,7 +35,7 @@ export default function ChatWindow() {
                     bgcolor={"#C6B4A3"}
                     width={'100%'}
                     p={2}
-                    border={'1px solid #000000'}
+
                 >
                     <TextField
                         placeholder="Tìm kiếm người dùng"

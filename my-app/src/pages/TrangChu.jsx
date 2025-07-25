@@ -1,15 +1,16 @@
 import { Avatar, Box, Button, Container, IconButton, Fade, TextField, Typography } from "@mui/material";
 import React from "react";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ChatHeader from "../components/ChatHeader";
 import ChatWindow from "../components/Chatwindow";
-import InputBar from "../components/Inputbar";
-import MessageBoxReceived from "../components/MessageBoxReceived";
-import MessageBoxSend from "../components/MessageBoxSend";
-import UserList from "../components/UserList";
+import InputBar from "../components/InputBox";
+import ChatBoxList from "../components/MessageList"
+import SideBarButtons from "../components/SidebarFunction";
 export default function TrangChu() {
     const scrollRef = useRef(null);
+    const navigate = useNavigate();
     const [showScrollBtn, setShowScrollBtn] = useState(false);
 
     // Simulate messages
@@ -34,24 +35,33 @@ export default function TrangChu() {
     useEffect(() => {
         scrollToBottom();
     }, []);
+
+    const handleUserProfile = () => {
+        navigate("userprofile")
+    }
+
     return(
         <Box
             display={"flex"}
             justifyContent={"space-between"}
             gap={1}
-        >
-            <Box
-                width={'20vw'}
+        >   
+            <Box 
+                display={"flex"}
             >
+                <SideBarButtons />
                 <ChatWindow />
             </Box>
+
             <Box
                 display={'flex'}
                 flexDirection={"column"}
                 justifyContent={"space-between"}
+                alignSelf={"end"}
                 width={'80vw'}
                 height={'100vh'}
                 gap={1}
+                flex={1}
             >
                 <Box>
                     <ChatHeader /> 
@@ -88,19 +98,7 @@ export default function TrangChu() {
                         },
                     }}
                 >
-                    {[...Array(50)].map((_, i) => {
-                        
-                            if (i%2 === 0) {
-                                return (
-                                    <Box alignSelf={"start"} key={i} > <MessageBoxReceived  /> </Box>
-                                );
-                            } else {
-                                return ( 
-                                    <Box alignSelf={"end"} key={i}><MessageBoxSend /></Box>
-                                );
-                            }   
-                        
-                    })}
+                    <ChatBoxList />
                     
                     <Fade in={showScrollBtn}>
                         <IconButton
