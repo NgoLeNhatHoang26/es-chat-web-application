@@ -1,10 +1,9 @@
 import { Avatar, Box, Button, Container, IconButton, Paper, TextField, Typography } from "@mui/material";
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-export default function MessageBoxReceived ({content}) {
+export default function MessageBoxReceived ({content, time}) {
     return (
             <Box
                 display={"flex"}
-                p={2}
                 gap={2}
             >
                 <Box>
@@ -32,7 +31,7 @@ export default function MessageBoxReceived ({content}) {
                 >
                     <Typography variant="body1" fontSize={'1.2rem'}>{content}</Typography>
 
-                    <Typography variant="caption text" alignSelf={"end"} fontSize={'0.8rem'} p={'5px'}>thời gian gửi</Typography>
+                    <Typography variant="caption text" alignSelf={"end"} fontSize={'0.8rem'} p={'5px'}>{time}</Typography>
                     
                 </Box>
             </Box>

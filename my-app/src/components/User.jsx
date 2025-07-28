@@ -6,16 +6,12 @@ export default function User({ name, avatar, status }) {
         <Box
             display={'flex'}
             alignItems="center"
-            py={0.5}
-            px={2}
+            justifyContent={'start'}
             gap={2}
-            width="100%"
         >
             <Avatar
                 src={avatar}
                 sx={{
-                    height:'50px',
-                    width:'50px',
                     border: '2px solid',
                     borderColor: '#000000',
                 }}
@@ -23,8 +19,8 @@ export default function User({ name, avatar, status }) {
                 {!avatar && <PersonIcon />}
             </Avatar>
             <Stack direction="column" spacing={0}  >
-                <Typography variant="h5" fontWeight={'bold'} color="#2A2A2A">{name}</Typography>
-                <Typography variant="subtitle1" color="#5C5C5C">{status}</Typography>
+                <Typography variant="h5" fontWeight={'bold'} color="#2A2A2A" fontSize={"1.2remv"}>{name}</Typography>
+                <Typography variant="subtitle1" color="#5C5C5C" alignSelf={"start"}>{status}</Typography>
             </Stack>
         </Box>
     );

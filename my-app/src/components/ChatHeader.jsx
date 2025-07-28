@@ -1,9 +1,20 @@
 import { Box, Button, Container, IconButton, Paper, TextField, Typography } from "@mui/material";
 import User from './User';
 import CallIcon from '@mui/icons-material/Call';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import axios from "axios";
 import ButtonMore from "./Buttons/HeaderOptionButton";
-export default function ChatHeader() {
+import { useEffect, useState } from "react";
+export default function ChatHeader({userId}) {
+    const [currentChatWith, setCurrentChatWith] = useState(null)
+    useEffect(()=> {
+        console.log("userId:", userId);
+        axios.get("http://localhost:3001/users",
+
+        )
+        .then(res => {const foundUser = res.data.find(user => user.id === userId);
+      setCurrentChatWith(foundUser)})
+        .catch(err => console.error(err))
+     },[userId])
     return (
             <Box
                 bgcolor={"#C6B4A3"}
@@ -14,11 +25,13 @@ export default function ChatHeader() {
                 borderColor={"#000000"}
                 py={1}
             >
-                <Box display={'flex'} alignItems={'start'} mx={''}>
-                    <User           
-                        key={1}
-                        name={"Nhat Minh"}
-                        status={"online"}/>
+                <Box display={'flex'} alignItems={'start'} px={2}>
+                    {currentChatWith && (
+                        <User
+                            name={currentChatWith.name}
+                            status={"online"}
+                        />
+                        )}
                 </Box>
 
                 <Box
@@ -30,6 +43,7 @@ export default function ChatHeader() {
                     <IconButton>
                         <CallIcon />
                     </IconButton>
+
                     <ButtonMore />
                 </Box>
                 

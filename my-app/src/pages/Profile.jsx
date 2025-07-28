@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Container, IconButton, Fade, TextField, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ChatWindow from "../components/Chatwindow";
+import ChatBox from "../components/ChatBox";
 import SideBarButtons from "../components/SidebarFunction";
 import UserProfile from "../components/UserProfile";
 export default function Profile() {
@@ -46,7 +46,6 @@ export default function Profile() {
                 display={"flex"}
             >
                 <SideBarButtons />
-                <ChatWindow />
             </Box>
 
             <Box

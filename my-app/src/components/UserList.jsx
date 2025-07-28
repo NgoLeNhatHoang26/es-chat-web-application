@@ -1,32 +1,40 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import User from "./User";
-import mockUsers from "../data/MOCK_DATA.json";
 export default function UserList (){
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    setUsers(mockUsers);
-  }, []);
 
+    const [users, setUsers] = useState([]);
+    useEffect(() => {
+        axios.get("http://localhost:3001/users")
+            .then(res => setUsers(res.data))
+            .catch(err => console.error(err));
+    }, []);
+    const handleChangeUser = () =>{
+    
+    }
     return (
 
-        <Box
-            width="100%" 
-            maxWidth="400px" 
-            mx='0'
-        >
-            {users.map((users) => (
-                <Box 
-                    mb={2}
-                >
-                    <User 
-                        key={users.id}
-                            name={users.name}
-                            avatar={users.avatar}
+        <Box>
+            {users.map((user) => (
+                    <Button
+                    onClick={handleChangeUser}
+                    sx={{
+                        display: 'flex',
+                        justifyContent:'start',
+                        width:'100%'
+                    }}>
+                    <Box
+                    >
+                        <User 
+                            key={user.id}
+                            name={user.name}
+                            avatar={user.avatar}
                             status={"online"}
-                    />
-                </Box>
+                        />
+                    </Box>
+                    </Button>
+
             ))}
         </Box>
 

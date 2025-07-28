@@ -1,0 +1,76 @@
+{
+  "users": [
+    {
+      "id": "userId_2",
+      "name": "MinhToan",
+      "SDT": "652-680-7846"
+    },
+    {
+      "id": "userId_3",
+      "name": "NhatPhong",
+      "SDT": "422-930-4097"
+    },
+    {
+      "id": "userId_4",
+      "name": "VanThien",
+      "SDT": "751-462-9870"
+    }
+  ],
+  "messages": [
+    {
+      "id": "9572",
+      "text": "check thời gian",
+      "senderId": "userId_1",
+      "reciverId": "userId_2",
+      "timeStamp": "13:51"
+    },
+    {
+      "id": "3fb8",
+      "text": "check lại thời gian",
+      "senderId": "userId_1",
+      "reciverId": "userId_3",
+      "timeStamp": "13:54"
+    },
+    {
+      "id": "5b0c",
+      "text": "ădawdawdaw",
+      "senderId": "userId_1",
+      "reciverId": "userId_4",
+      "timeStamp": "14:12"
+    },
+    {
+      "id": "01cf",
+      "text": "adawdawwd",
+      "senderId": "userId_1",
+      "reciverId": "userId_3",
+      "timeStamp": "15:15"
+    },
+    {
+      "id": "7106",
+      "text": "ôiiooiioo",
+      "senderId": "userId_2",
+      "timeStamp": "15:50"
+    },
+    {
+      "id": "6326",
+      "text": "okay đã chuyển cuộc trò chuyện được rồi",
+      "senderId": "userId_1",
+      "reciverId": "userId_2",
+      "timeStamp": "16:10"
+    },
+    {
+      "id": "68be",
+      "text": "fdfsdfdsdfsdf",
+      "senderId": "userId_1",
+      "reciverId": "userId_3",
+      "timeStamp": "16:32"
+    },
+    {
+      "id": "8204",
+      "text": "thời gian gửi",
+      "senderId": "userId_1",
+      "reciverId": "userId_4",
+      "timeStamp": "17:10"
+    }
+  ]
+}

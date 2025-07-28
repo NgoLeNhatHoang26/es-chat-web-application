@@ -1,8 +1,16 @@
 import { Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
 import theme from "../theme";
-
-import UserList from "./UserList";
-export default function ChatWindow() {
+import React, { useEffect, useState } from "react";
+import User from "./User";
+import axios from "axios";
+export default function ChatBox({onSend}) {
+    
+    const [users, setUsers] = useState([]);
+    useEffect(() => {
+        axios.get("http://localhost:3001/users")
+            .then(res => setUsers(res.data))
+            .catch(err => console.error(err));
+    }, []);
     return (
 
             <Box
@@ -11,7 +19,7 @@ export default function ChatWindow() {
                 bgcolor={theme.palette.secondary.main}
                 height={'100vh'}
                 border={'1px solid'}
-
+                width={'20vw'}
             >
                 <Box
                     display={'flex'}
@@ -29,6 +37,7 @@ export default function ChatWindow() {
                     >Chatbox
                     </Typography>
                 </Box>
+
                 <Box
                     display={'flex'}
                     alignItems={'center'}
@@ -52,14 +61,16 @@ export default function ChatWindow() {
                         }}
                     />
                 </Box>    
+
                 <Box
                     sx={{
+                        display:"flex",
+                        flexDirection: 'column',
                         height: '80vh', // Chưa tốt
                         width: '100%',
                         overflowY: 'scroll',
                         p: '3px',
-        
-                        // 👇 Custom Scrollbar
+                        
                         '&::-webkit-scrollbar': {
                      
                         width: '8px',
@@ -77,11 +88,28 @@ export default function ChatWindow() {
                         backgroundColor: '#333',
                         },
                     }}
-                    >
-                    <Box>
-                        <UserList />
-                    </Box>
-                    
+                >
+                    {users.map((user) => (
+                        <Button
+                        onClick={() => {
+                            console.log("Clicked user:", user.id)
+                            onSend(user.id)}}
+                        sx={{
+                            display: 'flex',
+                            justifyContent:'start',
+                            width:'100%'
+                        }}>
+                            <Box
+                            >
+                                <User 
+                                    key={user.id}
+                                    name={user.name}
+                                    avatar={user.avatar}
+                                    status={"online"}
+                                />
+                            </Box>
+                        </Button>
+                    ))}
                 </Box>
             </Box>
         

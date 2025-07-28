@@ -37,7 +37,7 @@ export default function OptionToolBox() {
                 Tìm kiếm tin nhắn
                 </Box>
             </Button>
-            <Button
+            <Button 
                 variant="outlinedPrimary"
                 sx={{
                     borderRadius: '12px',
@@ -57,6 +57,7 @@ export default function OptionToolBox() {
                 </Box>
             </Button>       
             <Button
+                
                 variant="outlinedPrimary"
                 sx={{
                     borderRadius: '12px',
