@@ -1,7 +1,8 @@
 import { Avatar, Box, Button, Container, IconButton, Paper, Stack, TextField, Typography } from "@mui/material";
 import MessageBoxReceived from "./MessageBoxReceived";
+import React from "react";
 import MessageBoxSend from "./MessageBoxSend";
-export default function ChatBoxList({messages}) {
+function MessageList({messages}) {
     return (
         <Box>
             <Stack>
@@ -26,3 +27,4 @@ export default function ChatBoxList({messages}) {
         </Box>
     );
 }
+export default React.memo(MessageList);

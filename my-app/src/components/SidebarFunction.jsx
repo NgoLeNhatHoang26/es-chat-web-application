@@ -3,15 +3,14 @@ import PersonIcon from "@mui/icons-material/Person";
 import MenuIcon from '@mui/icons-material/Menu';
 import ChatIcon from '@mui/icons-material/Chat';
 import SettingButton from "./Buttons/SettingButton";
+import { useChat } from "../context/ChatContext";
 import { useNavigate } from "react-router-dom";
 export default function SideBarButtons () {
     const navigate = useNavigate();
     const handleUserProfile = () => {
         navigate("/userprofile")
     }
-    const handleHome = () => {
-        navigate("/home")
-    }
+    const {currentChatWith, setCurrentChatWith} = useChat();
     return (
         <Box
             height={"100vh"}
@@ -53,7 +52,7 @@ export default function SideBarButtons () {
                     <MenuIcon sx={{ width: '2vw',height: '2vw'}}/>
                 </IconButton>
                 <IconButton
-                    onClick={handleHome}
+                    onClick={() => setCurrentChatWith(null)}
                     sx={{
                         width: '3vw',
                         height: '3vw',

@@ -1,29 +1,29 @@
 import { Avatar, Box, Button, Container, IconButton, Fade, TextField, Typography } from "@mui/material";
-import React, { useEffect,useRef, useState } from "react";
+import React, { useEffect,useRef, useState, useCallback } from "react";
 import axios from "axios";
-import ChatBoxList from "./MessageList";
+import MessageList from "./MessageList";
 import InputBar from "./InputBox";
 import ChatHeader from "./ChatHeader";
+import { useChat } from "../context/ChatContext";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
-export default function MesageWindow({userId}) {
-    const [messages, setMessages] = useState([])
+export default function MesageWindow() {
+    const {messages, setMessages, currentChatWith} = useChat()
     // Lấy dữ liệu từ json-server có người nhận là userId được truyền vào
     useEffect(() => {
-        if (!userId) return; 
-        console.log("Fetching messages with", userId);
+        if (!currentChatWith) return; 
         axios.get("http://localhost:3001/messages", {
             params: {
                 senderId: "userId_1",
-                reciverId: userId
+                reciverId: currentChatWith
             }
         })
             .then(res =>setMessages(res.data))
             .catch(err => console.error(err))
-    }, [userId]);
+    }, [currentChatWith]);
 
     // Gửi tinh nhắn vừa nhập và cập nhật lại giao diện hiển thị tin nhắn ngay sau khi gửi
-    const handleSendingMessage = (text) =>{
+    const handleSendingMessage = useCallback((text) =>{
         const sendTime = new Date(Date.now()).toLocaleString("vi-VN", {
             hour:"2-digit",
             minute:"2-digit",
@@ -31,13 +31,13 @@ export default function MesageWindow({userId}) {
         const newMessage = {
             text: text,
             senderId : "userId_1",
-            reciverId: userId,
+            reciverId: currentChatWith,
             timeStamp : sendTime
         }
         axios.post("http://localhost:3001/messages", newMessage)
             .then(res => setMessages(prev => [...prev,res.data]))
             .catch(err => console.error(err))
-    }
+    },[currentChatWith,setMessages])
     
     const scrollRef = useRef(null);
     const [showScrollBtn, setShowScrollBtn] = useState(false);
@@ -72,7 +72,7 @@ export default function MesageWindow({userId}) {
             width={"100%"}
         >
     
-            <ChatHeader userId={userId}/> 
+            <ChatHeader /> 
 
             <Box 
                 display={"flex"}
@@ -104,7 +104,7 @@ export default function MesageWindow({userId}) {
                         },
                     }}
             >
-                <ChatBoxList messages={messages} />
+                <MessageList messages={messages} />
                 
                 <Fade in={showScrollBtn}> 
                         <IconButton
@@ -123,7 +123,7 @@ export default function MesageWindow({userId}) {
             <Box
                 width={'100%'}    
             >
-                <InputBar onSend={handleSendingMessage}/>
+                <InputBar onSend={handleSendingMessage}/> 
             </Box>
         </Box>
     );

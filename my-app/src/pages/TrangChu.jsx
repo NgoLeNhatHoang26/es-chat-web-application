@@ -1,18 +1,21 @@
-import { Avatar, Box, Button, Container, IconButton, Fade, TextField, Typography } from "@mui/material";
-import React from "react";
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {  Box, Typography } from "@mui/material";
+import { useEffect, useCallback, useState } from "react";
 import SideBarButtons from "../components/SidebarFunction";
 import ChatBox from "../components/ChatBox";
 import MesageWindow from "../components/MessageWindow";
+import {  useChat } from "../context/ChatContext";
 export default function TrangChu() {
 
-    const [currentChatWith,setCurrentChatWith] = useState(null) // Lưu trữ id của người dùng đang được chọn
-    const handleChangeUser = (newUserId) =>{
+    const [showMessageWindow, setShowMessageWindow] = useState(false)
+    const {currentChatWith, setCurrentChatWith} = useChat() // Lưu trữ id của người dùng đang được chọn
+
+    const handleChangeUser = useCallback((newUserId) => {
         setCurrentChatWith(newUserId)
-    }
+    },[setCurrentChatWith])
+
     useEffect(() => {
     console.log("Current chat with:", currentChatWith);
+    setShowMessageWindow(!(currentChatWith === null))
     }, [currentChatWith]);
     return(
         <Box
@@ -26,11 +29,25 @@ export default function TrangChu() {
                 <SideBarButtons />
                 <ChatBox onSend={handleChangeUser}/>
             </Box>
-
             < Box 
                 width={'100vw'}
-            >
-                <MesageWindow userId={currentChatWith}/>
+            >   
+                {showMessageWindow ? (
+                    <MesageWindow />
+                ) : (
+                    <Box 
+                    display={"flex"}
+                    alignItems={'center'}
+                    justifyContent={'center'}
+                    bgcolor={"#E8DCD1"} 
+                    border={'1px solid'}
+                    height={"100vh"}
+                    >     
+                        <Typography variant="h5">
+                            Chọn một người để bắt đầu cuộc trò chuyện
+                        </Typography>
+                    </Box>      
+            )}
             </Box>
         </Box>
     );

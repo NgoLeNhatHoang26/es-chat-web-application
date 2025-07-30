@@ -1,10 +1,11 @@
-import { Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button,TextField, Typography } from "@mui/material";
 import theme from "../theme";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import User from "./User";
 import axios from "axios";
-export default function ChatBox({onSend}) {
-    
+import { useChat } from "../context/ChatContext";
+function ChatBox({onSend}) {
+    const {currentChatWith} = useChat();
     const [users, setUsers] = useState([]);
     useEffect(() => {
         axios.get("http://localhost:3001/users")
@@ -91,23 +92,25 @@ export default function ChatBox({onSend}) {
                 >
                     {users.map((user) => (
                         <Button
+                        key={user.id}
                         onClick={() => {
                             console.log("Clicked user:", user.id)
                             onSend(user.id)}}
                         sx={{
                             display: 'flex',
                             justifyContent:'start',
-                            width:'100%'
-                        }}>
-                            <Box
-                            >
+                            width:'100%',
+                            ...(user.id === currentChatWith)? {
+                            bgcolor: "#bda791ff"} :{}
+                        }
+                         
+                        }>
                                 <User 
                                     key={user.id}
                                     name={user.name}
                                     avatar={user.avatar}
                                     status={"online"}
                                 />
-                            </Box>
                         </Button>
                     ))}
                 </Box>
@@ -115,3 +118,4 @@ export default function ChatBox({onSend}) {
         
     );
 }
+export default React.memo(ChatBox)

@@ -1,0 +1,5 @@
+feat(chat): implement send message and switch chat target
+
+- Tạo json-server và cấu hình axios
+- Thêm chức năng gửi tin nhắn và hiển thị sau khi gửi
+- Cho phép chuyển người cần nhắn bằng click vào tên/avatar

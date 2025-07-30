@@ -2,16 +2,37 @@ import { Box, Button, Container, Paper, TextField, Typography } from "@mui/mater
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
 import bg from './asset/Rectangle62.png';
+import axios from "axios";
+import { useState, useCallback,useEffect } from "react";
 
 export default function Login() {
   const theme = useTheme();
   const navigate = useNavigate();
+  const [signInName, setSignInName] = useState("")
+  const [signInPassword, setSignInPassword] = useState("")
+  const [users, setUsers] = useState([])
+
+  useEffect(()=>{
+    axios.get("http://localhost:3001/users")
+      .then(res => setUsers(res.data))
+      .catch(err => console.error(err))
+  },[])
+
   const handleLogin = () => {
-    navigate("/home");
-  };
+    const matchedUser = users.find(user => 
+    user.name === signInName && user.password === signInPassword)
+    if(matchedUser){ 
+      navigate("/home")
+    } else {
+      setSignInName("")
+      setSignInPassword("")
+      console.error("Không đúng tên đăng nhập hoặc mật khẩu")
+    }
+  }
   const handleSignin = () => {
     navigate("/signin");
   }
+
   return (
     <Box
       height={'100vh'}
@@ -73,6 +94,8 @@ export default function Login() {
             gap={4}  
           >  
             <TextField 
+              value={signInName}
+              onChange={(e) => setSignInName(e.target.value)}
               label="Tên đăng nhập"
                 InputLabelProps={{
                 sx: {
@@ -90,6 +113,8 @@ export default function Login() {
               }}
             /> 
             <TextField label="Mật khẩu" type="password" fullWidth
+                value={signInPassword}
+                onChange={(e) => setSignInPassword(e.target.value)}
                 InputLabelProps={{
                   sx: {
                     p: 1,

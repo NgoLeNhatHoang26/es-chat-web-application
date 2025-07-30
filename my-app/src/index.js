@@ -6,13 +6,17 @@ import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@mui/material/styles'; 
 import theme from './theme'; //
 import { CssBaseline } from '@mui/material';
+import { ChatProvider } from './context/ChatContext';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>   
+    <ChatProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>   
+    </ChatProvider>
   </React.StrictMode>
 );
 

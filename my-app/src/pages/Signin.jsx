@@ -2,12 +2,32 @@ import { Box, Button, Container, Paper, TextField, Typography } from "@mui/mater
 import { useTheme } from '@mui/material/styles';
 import bg from './asset/Rectangle62.png';
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useCallback, useState } from "react";
 
 export default function Signin() {
-  const theme = useTheme();
   const navigate = useNavigate();
+  const [signInName,setSignInName]= useState("")
+  const [password,setPassword] = useState("")
+  const [phoneNumber, setphoneNumber] = useState("")
+  const [retryPassword,setRetryPassword] = useState("")
+  
   const handleLogin = () => {
     navigate("/")
+  }
+  const handleVerifyPassword = () =>{
+    if ( retryPassword === password && password !== ""){
+    const newUser = {
+        id : "userId_5",
+        name : signInName,
+        password : password,
+        SDT : phoneNumber
+    }
+    axios.post("http://localhost:3001/users", newUser)
+    handleLogin()
+    }   else {
+            setRetryPassword("")
+    }
   }
   return (
       <Box 
@@ -74,6 +94,7 @@ export default function Signin() {
                 fontSize={10}
                 >  
                 <TextField 
+                onChange={(e) => setSignInName(e.target.value)}
                 label="Tên đăng nhập"
                     InputLabelProps={{
                     sx: {
@@ -90,6 +111,7 @@ export default function Signin() {
                 }}
                 /> 
                 <TextField label="Số điện thoại" 
+                    onChange={(e) => setphoneNumber(e.target.value)}
                     InputLabelProps={{
                     sx: {
                     p: 1,
@@ -106,6 +128,7 @@ export default function Signin() {
                 />
                 <TextField 
                 label="Mật khẩu"
+                onChange={(e) => setPassword(e.target.value)}
                 type="password"
                     InputLabelProps={{
                     sx: {
@@ -122,6 +145,8 @@ export default function Signin() {
                 }}
                 />
                 <TextField 
+                value={retryPassword}
+                onChange={(e) => setRetryPassword(e.target.value)}
                 label="Nhập lại mật khẩu"
                 type="password"
                     InputLabelProps={{
@@ -141,7 +166,7 @@ export default function Signin() {
             </Box>
             <Button
                 variant="outlinedSecondary"
-                onClick={handleLogin}
+                onClick={handleVerifyPassword}
                 sx={{
                     mt: 3,
                     width: '30%',

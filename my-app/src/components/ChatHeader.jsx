@@ -1,20 +1,20 @@
-import { Box, Button, Container, IconButton, Paper, TextField, Typography } from "@mui/material";
+import { Box,IconButton} from "@mui/material";
 import User from './User';
 import CallIcon from '@mui/icons-material/Call';
 import axios from "axios";
-import ButtonMore from "./Buttons/HeaderOptionButton";
+import ButtonMore from "./HeaderOptionButton";
 import { useEffect, useState } from "react";
-export default function ChatHeader({userId}) {
-    const [currentChatWith, setCurrentChatWith] = useState(null)
+import { useChat } from "../context/ChatContext";
+export default function ChatHeader() {
+    const {currentChatWith} = useChat();
+    const [currentUser, setCurrentUser] = useState();
     useEffect(()=> {
-        console.log("userId:", userId);
         axios.get("http://localhost:3001/users",
-
         )
-        .then(res => {const foundUser = res.data.find(user => user.id === userId);
-      setCurrentChatWith(foundUser)})
+        .then(res => {const foundUser = res.data.find(user => user.id === currentChatWith);
+      setCurrentUser(foundUser)})
         .catch(err => console.error(err))
-     },[userId])
+     },[currentChatWith])
     return (
             <Box
                 bgcolor={"#C6B4A3"}
@@ -26,9 +26,9 @@ export default function ChatHeader({userId}) {
                 py={1}
             >
                 <Box display={'flex'} alignItems={'start'} px={2}>
-                    {currentChatWith && (
+                    {currentUser && (
                         <User
-                            name={currentChatWith.name}
+                            name={currentUser.name}
                             status={"online"}
                         />
                         )}
@@ -39,7 +39,7 @@ export default function ChatHeader({userId}) {
                     alignItems={"end"}
                     paddingX={3}
                     gap={4}
-                >
+                >   
                     <IconButton>
                         <CallIcon />
                     </IconButton>
