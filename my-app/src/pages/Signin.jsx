@@ -1,24 +1,33 @@
-import { Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
-import { useTheme } from '@mui/material/styles';
+import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import bg from './asset/Rectangle62.png';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Signin() {
   const navigate = useNavigate();
+  const [newestUser,setNewestUser] = useState()
   const [signInName,setSignInName]= useState("")
   const [password,setPassword] = useState("")
   const [phoneNumber, setphoneNumber] = useState("")
   const [retryPassword,setRetryPassword] = useState("")
-  
+  const [failSignin, setFailSignin] = useState("");
+  useEffect(() => {
+    axios.get("http://localhost:3001/users")
+        .then(res =>{ 
+            if ( res.data.length > 0)
+            setNewestUser(res.data[res.data.length-1])
+            console.log(res.data[res.data.length-1])
+        })
+        .catch(err => console.error(err))
+  },[])
   const handleLogin = () => {
     navigate("/")
   }
   const handleVerifyPassword = () =>{
     if ( retryPassword === password && password !== ""){
     const newUser = {
-        id : "userId_5",
+        id : newestUser ? parseInt(newestUser.id)+1 : 0,
         name : signInName,
         password : password,
         SDT : phoneNumber
@@ -26,7 +35,9 @@ export default function Signin() {
     axios.post("http://localhost:3001/users", newUser)
     handleLogin()
     }   else {
-            setRetryPassword("")
+        setFailSignin("Mật khẩu không khớp")
+        setPassword("")
+        setRetryPassword("")
     }
   }
   return (
@@ -127,6 +138,7 @@ export default function Signin() {
                     }}
                 />
                 <TextField 
+                value={password}
                 label="Mật khẩu"
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
@@ -164,6 +176,11 @@ export default function Signin() {
                 }}
                 />  
             </Box>
+            {failSignin && (
+                <Typography color="error" variant="body1" sx={{ mt: 2 }}>
+                {failSignin}
+                </Typography>
+            )}
             <Button
                 variant="outlinedSecondary"
                 onClick={handleVerifyPassword}

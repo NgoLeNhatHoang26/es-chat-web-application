@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Container, IconButton, Fade, TextField, Typography } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
@@ -7,7 +7,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useChat } from "../context/ChatContext";
 export default function ButtonMore() {
     const [showOptions, setShowOptions] = useState(false);
-    const {currentChatWith, setCurrentChatWith} = useChat()
+    const {setCurrentChatWith} = useChat()
     return (
         <Box
             bgcolor={"#CBB9A8"}
@@ -81,7 +81,9 @@ export default function ButtonMore() {
                         </Box>
                     </Button>       
                     <Button
-                        onClick={() => setCurrentChatWith(null)}
+                        onClick={() => setCurrentChatWith(
+                            {id : 0}
+                        )}
                         variant="outlinedPrimary"
                         sx={{
                             borderRadius: '12px',

@@ -1,19 +1,21 @@
-import { Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
-
-export default function UserProfile () {
+import { Avatar, Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
+import { useChat  } from "../context/ChatContext";
+import { useEffect, useState } from "react";
+export default function UserProfile ({userprofile}) {
+    const [user,setUser] = useState(userprofile || {
+        name: "",
+        SDT: "",
+        password: "",
+    })
     return (
         <Box
             gap={3}
             sx={{
-                width: "70%",
+                width: "100%",
                 height: "fit-content",
                 display: "flex",
                 flexDirection: "column",
                 alignContent: "center",
-                borderRadius: 5,
-                bgcolor: "#D6C2B5",
-                border: "1px solid",
-                p: 5,
             }}
         >
             <Typography
@@ -27,6 +29,7 @@ export default function UserProfile () {
                 Thông tin cá nhân
             </Typography>
 
+            <Avatar src={user.avatar} alt={user.name} sx={{ width: '10vw', height: '10vw', alignSelf: 'center' }} />
             <Box
                 display={"flex"}
                 flexDirection={"column"}
@@ -43,7 +46,7 @@ export default function UserProfile () {
                     p={2}
                     borderRadius={6}
                 >
-                    Thông tin tên đăng nhập
+                    {user.name}
                 </Typography>
                 <Typography
                     fontWeight={"bold"}
@@ -53,10 +56,9 @@ export default function UserProfile () {
                 <Typography 
                     bgcolor={"#ffffff"}
                     p={2}
-
                     borderRadius={6}
                 >
-                    Thông tin số điện thoại
+                    {user.SDT}
                 </Typography>
                 <Typography
                     fontWeight={"bold"}
@@ -68,34 +70,8 @@ export default function UserProfile () {
                     p={2}
                     borderRadius={6}
                 >
-                    Thông tin mật khẩu
+                    {user.password}
                 </Typography>
-                <Box
-                    width={"50%"}
-                    display={"flex"}
-                    flexDirection={"column"}
-                    alignSelf={"center"}
-                    gap={2}
-                    mt={3}
-                >
-                    <Button
-                        variant="outlinedSecondary"
-                        sx={{
-                            fontSize:'1.2rem',
-                        }}
-                    >
-                        Đổi mật khẩu
-                    </Button>
-                    <Button
-                        variant="outlinedSecondary"
-                        sx={{
-                            fontSize:'1.2rem'
-                        }}
-                    >
-                        Thêm phần giới thiệu
-                    </Button>
-                </Box>
-
             </Box>
         </Box>
 

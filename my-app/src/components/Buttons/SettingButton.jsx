@@ -1,13 +1,23 @@
-import { Avatar, Box, Button, Container, IconButton, Fade, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { Box, Button, IconButton } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { useChat } from "../../context/ChatContext";
 export default function SettingButton() {
+    const {currentUser, setCurrentUser } = useChat();
     const [showSetting, setShowSetting] = useState(false);
     const navigate = useNavigate();
+    useEffect(() => {
+        if (currentUser.id === 0)
+        {
+            console.log("Thực hiện đăng xuất")
+            navigate("/")
+        }
+    },[currentUser.id])
     const handleLogout = () => {
-        navigate("/")
+        localStorage.removeItem("currentUser")
+        setCurrentUser({id: 0})
     }
     return (
         <Box sx={{ position: 'relative', display: 'inline-block' }}>
@@ -77,7 +87,7 @@ export default function SettingButton() {
                         fontSize={'0.8vw'}
                     >
                     <LogoutIcon width="0.8vw" height="0.8vw"/>
-                    Đăng xuất
+                        Đăng xuất
                     </Box>  
                 </Button>  
             </Box>}

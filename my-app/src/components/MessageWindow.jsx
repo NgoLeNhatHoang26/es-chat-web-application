@@ -1,49 +1,38 @@
-import { Avatar, Box, Button, Container, IconButton, Fade, TextField, Typography } from "@mui/material";
-import React, { useEffect,useRef, useState, useCallback } from "react";
+import { Box, IconButton, Fade} from "@mui/material";
+import { useEffect,useRef, useState, useCallback, use } from "react";
 import axios from "axios";
 import MessageList from "./MessageList";
 import InputBar from "./InputBox";
 import ChatHeader from "./ChatHeader";
 import { useChat } from "../context/ChatContext";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-
+import socket from "../socket";
 export default function MesageWindow() {
-    const {messages, setMessages, currentChatWith} = useChat()
+    const {messages, setMessages, currentChatWith, currentUser} = useChat()
+    const conversation = [currentChatWith.id, currentUser.id].sort((a,b) => a - b).join('_')
     // Lấy dữ liệu từ json-server có người nhận là userId được truyền vào
     useEffect(() => {
         if (!currentChatWith) return; 
         axios.get("http://localhost:3001/messages", {
             params: {
-                senderId: "userId_1",
-                reciverId: currentChatWith
+                conversationId : conversation
             }
         })
             .then(res =>setMessages(res.data))
             .catch(err => console.error(err))
     }, [currentChatWith]);
-
-    // Gửi tinh nhắn vừa nhập và cập nhật lại giao diện hiển thị tin nhắn ngay sau khi gửi
-    const handleSendingMessage = useCallback((text) =>{
-        const sendTime = new Date(Date.now()).toLocaleString("vi-VN", {
-            hour:"2-digit",
-            minute:"2-digit",
-        })
-        const newMessage = {
-            text: text,
-            senderId : "userId_1",
-            reciverId: currentChatWith,
-            timeStamp : sendTime
-        }
-        axios.post("http://localhost:3001/messages", newMessage)
-            .then(res => setMessages(prev => [...prev,res.data]))
-            .catch(err => console.error(err))
-    },[currentChatWith,setMessages])
-    
+    useEffect(() => {
+        socket.on("receive-message", (message) => {
+            console.log("Received message:", message);
+            setMessages(prev => [...prev, message]);
+        });
+        return () => {
+            socket.off("receive-message");
+        };
+    }, [socket, currentChatWith]);
     const scrollRef = useRef(null);
     const [showScrollBtn, setShowScrollBtn] = useState(false);
-
-
-    // Handle scroll to bottom
+    
     const scrollToBottom = () => {
         scrollRef.current?.scrollTo({
         top: scrollRef.current.scrollHeight,
@@ -51,14 +40,12 @@ export default function MesageWindow() {
         });
     };
 
-    // Show button only if not already scrolled to bottom
     const handleScroll = () => {
         const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
         const isAtBottom = scrollHeight - scrollTop <= clientHeight + 20;
         setShowScrollBtn(!isAtBottom);
     };
 
-    // Scroll to bottom on mount
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
@@ -71,19 +58,17 @@ export default function MesageWindow() {
             height={'100vh'}
             width={"100%"}
         >
-    
-            <ChatHeader /> 
-
+            <ChatHeader />
             <Box 
                 display={"flex"}
                 flexDirection={"column"}
                 gap={1}
-                py={1}
+                p={2}
                 ref={scrollRef}
                 onScroll={handleScroll}
                 bgcolor={"#E8DCD1"}
                 border={'1px solid'}
-                flex={1}
+               flex={1}
                 sx={{
 
                     overflowY: 'scroll',
@@ -115,7 +100,7 @@ export default function MesageWindow() {
                             right: '35vw',
                         }}
                         >
-                        <ArrowDownwardIcon />
+                            <ArrowDownwardIcon />
                         </IconButton>
                 </Fade>
             </Box>
@@ -123,7 +108,7 @@ export default function MesageWindow() {
             <Box
                 width={'100%'}    
             >
-                <InputBar onSend={handleSendingMessage}/> 
+                <InputBar /> 
             </Box>
         </Box>
     );

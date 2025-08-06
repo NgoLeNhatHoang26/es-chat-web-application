@@ -1,16 +1,23 @@
-import { Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
-import { useTheme } from '@mui/material/styles';
+import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import bg from './asset/Rectangle62.png';
 import axios from "axios";
-import { useState, useCallback,useEffect } from "react";
-
+import { useState, useEffect, useLayoutEffect } from "react";
+import { useChat } from "../context/ChatContext";
 export default function Login() {
-  const theme = useTheme();
   const navigate = useNavigate();
   const [signInName, setSignInName] = useState("")
   const [signInPassword, setSignInPassword] = useState("")
   const [users, setUsers] = useState([])
+  const [failLogin, setFailLogin] = useState("")
+  const {currentUser,setCurrentUser} = useChat()
+
+  useEffect(()=> {
+    const savedUser = localStorage.getItem("currentUser")
+    if (savedUser) {
+      setCurrentUser(JSON.parse(savedUser))
+    }
+  },[])
 
   useEffect(()=>{
     axios.get("http://localhost:3001/users")
@@ -18,19 +25,33 @@ export default function Login() {
       .catch(err => console.error(err))
   },[])
 
+  useEffect(() => {
+  if (currentUser.id !== 0) {
+    console.log("Thực hiện đăng nhập")
+    console.log("Current user:", currentUser)
+    navigate("/home");
+  }
+  }, [currentUser]);
+
   const handleLogin = () => {
     const matchedUser = users.find(user => 
     user.name === signInName && user.password === signInPassword)
+    console.log(matchedUser)
     if(matchedUser){ 
-      navigate("/home")
+      localStorage.setItem("currentUser", JSON.stringify(matchedUser))
+      setCurrentUser(matchedUser)
     } else {
       setSignInName("")
       setSignInPassword("")
-      console.error("Không đúng tên đăng nhập hoặc mật khẩu")
+      setFailLogin("Sai tên đăng nhập hoặc mật khẩu")
     }
   }
   const handleSignin = () => {
     navigate("/signin");
+  }
+
+  const handleForgotPassword = () =>{
+    navigate("/forgotpassword")
   }
 
   return (
@@ -131,7 +152,13 @@ export default function Login() {
                 }}
             />
           </Box>
+          {failLogin && (
+            <Typography color="error" variant="body1" sx={{ mt: 2 }}>
+              {failLogin}
+            </Typography>
+          )}
           <Button
+            onClick={handleForgotPassword}
             sx={{
               color:"#000000",
               ml:'50%',

@@ -1,16 +1,22 @@
-import { Avatar, Box, Button, Container, IconButton, Paper, TextField, Typography } from "@mui/material";
+import { Avatar, Box, Button, IconButton } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import MenuIcon from '@mui/icons-material/Menu';
 import ChatIcon from '@mui/icons-material/Chat';
 import SettingButton from "./Buttons/SettingButton";
 import { useChat } from "../context/ChatContext";
 import { useNavigate } from "react-router-dom";
-export default function SideBarButtons () {
+
+export default function SideBarButtons ({onSendCB}) {
     const navigate = useNavigate();
     const handleUserProfile = () => {
         navigate("/userprofile")
     }
-    const {currentChatWith, setCurrentChatWith} = useChat();
+    const handleHideChatBox = () => {
+        if ( typeof onSendCB === "function") 
+            onSendCB();
+    }
+
+    const {currentUser, setCurrentChatWith} = useChat();
     return (
         <Box
             height={"100vh"}
@@ -24,16 +30,12 @@ export default function SideBarButtons () {
             py={3}
             gap={3}
         >
-            <Button onClick={handleUserProfile}>
-                <Avatar
-                    sx={{
-                        width: '3vw',
-                        height: '3vw',
-                        border: '1px solid #000000'
-                    }}
-                >
-                    <PersonIcon  sx={{ width: '2vw',height: '2vw'}}/>
-                </Avatar>
+            <Button onClick={handleUserProfile}
+                sx={{
+                    width: 'fit-content',
+                }}
+            >
+                <Avatar src={currentUser.avatar} alt={currentUser.name} si/>
             </Button>
             <Box
                 display={"flex"}
@@ -44,6 +46,7 @@ export default function SideBarButtons () {
                 gap={2}
             >
                 <IconButton
+                    onClick={ handleHideChatBox}
                     sx={{
                         width: '3vw',
                         height: '3vw',
@@ -52,7 +55,7 @@ export default function SideBarButtons () {
                     <MenuIcon sx={{ width: '2vw',height: '2vw'}}/>
                 </IconButton>
                 <IconButton
-                    onClick={() => setCurrentChatWith(null)}
+                    onClick={() => setCurrentChatWith({id: 0})}
                     sx={{
                         width: '3vw',
                         height: '3vw',

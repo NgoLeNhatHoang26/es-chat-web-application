@@ -7,15 +7,19 @@ import {  useChat } from "../context/ChatContext";
 export default function TrangChu() {
 
     const [showMessageWindow, setShowMessageWindow] = useState(false)
-    const {currentChatWith, setCurrentChatWith} = useChat() // Lưu trữ id của người dùng đang được chọn
-
-    const handleChangeUser = useCallback((newUserId) => {
-        setCurrentChatWith(newUserId)
+    const {currentChatWith, setCurrentChatWith} = useChat() // Lưu trữ  người dùng đang được chọn
+    const [showChatBox, setShowChatBox] = useState(true)
+    const handleChangeUser = useCallback((newUser) => {
+        setCurrentChatWith(newUser)
     },[setCurrentChatWith])
+    // Hiển thị hoặc ẩn ChatBox
+    const handleShowChatBox = useCallback(() => {
+        setShowChatBox(!showChatBox)
+    },[showChatBox])
 
     useEffect(() => {
     console.log("Current chat with:", currentChatWith);
-    setShowMessageWindow(!(currentChatWith === null))
+    setShowMessageWindow(!(currentChatWith.id === 0))
     }, [currentChatWith]);
     return(
         <Box
@@ -26,8 +30,11 @@ export default function TrangChu() {
             <Box 
                 display={"flex"}
             >
-                <SideBarButtons />
-                <ChatBox onSend={handleChangeUser}/>
+                <SideBarButtons onSendCB={handleShowChatBox}/>
+                {showChatBox && (
+                    <ChatBox onSend={handleChangeUser}/>
+                )}
+                
             </Box>
             < Box 
                 width={'100vw'}
@@ -48,6 +55,9 @@ export default function TrangChu() {
                         </Typography>
                     </Box>      
             )}
+            </Box>
+            <Box>
+
             </Box>
         </Box>
     );

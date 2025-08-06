@@ -1,29 +1,56 @@
 import { Avatar, Box, Button, Container, IconButton, Paper, TextField, Typography } from "@mui/material";
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-export default function MessageBoxSend ({content, time}) {
+export default function MessageBoxSend ({avatar,type,content, time}) {
     return (
             <Box
                 display={"flex"}
                 gap={2}
             >
+                
+                {type === "text" ? (
+                <Box
+                    display={"flex"}
+                    flexDirection={"column"}
+                    maxWidth={'40vw'}
+                    maxHeight={'auto'}
+                    width={'fit-content'}
+                    bgcolor={"#FFFFFF"}
+                    px={2}
+                    pt={2}
+                    border={"1px solid #000000"}
+                    borderRadius={6}
+                    sx={{
+                        overflowWrap: 'break-word',
+                        wordBreak: 'break-word',
+                        whiteSpace: 'pre-wrap',
+                        textAlign: 'left',
+                    }}
+                >
+                    <Typography variant="body1" fontSize={'1.2rem'}>{content}</Typography>
+
+                    <Typography variant="caption text" fontSize={'0.8rem'} p={'5px'}>{time}</Typography>
+                </Box>
+                ) : (
                 <Box
                     display={"flex"}
                     flexDirection={"column"}
                     maxWidth={'40vw'}
                     width={'fit-content'}
                     height={'fit-content'}
-                    bgcolor={"#FFFFFF"}
-                    px={2}
-                    pt={2}
-                    border={"1px solid #000000"}
-                    borderRadius={6}
                 >
-                    <Typography variant="body1" fontSize={'1.2rem'}>{content}</Typography>
+                    <img src={content} alt="Attached" style={{ maxWidth: '100%', borderRadius: '8px' }} />
 
-                    <Typography variant="caption text" fontSize={'0.8rem'} p={'5px'}>{time}</Typography>
+                    <Typography variant="caption text" alignSelf={"end"} fontSize={'0.8rem'} p={'5px'}>{time}</Typography>
+                    
                 </Box>
+
+                )}
                 
                 <Box>
+                    {
+                    avatar ? (
+                    <Avatar src={avatar} alt="User Avatar" sx={{ width: '3vw', height: '3vw' }} />
+                    ) : (
                     <Avatar
                         sx={{
                             height:'50px',
@@ -33,7 +60,11 @@ export default function MessageBoxSend ({content, time}) {
                         }}>
                         <PermIdentityIcon />
                     </Avatar>
+                    )
+        
+                }
                 </Box>
+                
             </Box>
     );
 }
